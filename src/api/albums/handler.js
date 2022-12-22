@@ -2,11 +2,6 @@ class AlbumsHandler {
   constructor(service, validator) {
     this._service = service;
     this._validator = validator;
-
-    // this.postAlbumHandler = this.postAlbumHandler.bind(this);
-    // this.getAlbumByIdHandler = this.getAlbumByIdHandler.bind(this);
-    // this.putAlbumByIdHandler = this.putAlbumByIdHandler.bind(this);
-    // this.deleteAlbumByIdHandler = this.deleteAlbumByIdHandler.bind(this);
   }
 
   async postAlbumHandler(request, h) {
@@ -25,9 +20,10 @@ class AlbumsHandler {
     return response;
   }
 
-  async getAlbumByIdHandler(request, h) {
+  async getAlbumByIdHandler(request) {
     const { id } = request.params;
     const album = await this._service.getAlbumById(id);
+    const album_song = await this._service.getSongByAlbum(id);
     return {
       status: "success",
       data: {
@@ -35,6 +31,7 @@ class AlbumsHandler {
           id: album.album_id,
           name: album.name,
           year: album.year,
+          songs: album_song,
         },
       },
     };
