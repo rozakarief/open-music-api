@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 const InvariantError = require("../../exceptions/InvariantError");
 const { SongPayloadSchema } = require("./schema");
 

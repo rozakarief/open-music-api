@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 const AlbumsHandler = require("./handler");
 const routes = require("./routes");
 

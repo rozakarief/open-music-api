@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable quotes */
 const { Pool } = require("pg");
 const { nanoid } = require("nanoid");
 const InvariantError = require("../../exceptions/InvariantError");
@@ -31,10 +34,11 @@ class AlbumsService {
       values: [album_id],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError("Album tidak ditemukan");
     }
-    return result.rows.map(mapDBToModel)[0];
+    // return result.rows.map(mapDBToModel)[0];
+    return mapDBToModel(result.rows[0]);
   }
 
   async editAlbumById(album_id, { name, year }) {
@@ -43,7 +47,7 @@ class AlbumsService {
       values: [name, year, album_id],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError("Gagal memperbarui Album. Id tidak ditemukan");
     }
   }
@@ -54,7 +58,7 @@ class AlbumsService {
       values: [album_id],
     };
     const result = await this._pool.query(query);
-    if (!result.rows.length) {
+    if (!result.rowCount) {
       throw new NotFoundError("Album gagal dihapus. Id tidak ditemukan");
     }
   }

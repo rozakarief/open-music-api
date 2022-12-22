@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable quotes */
 const { Pool } = require("pg");
 const { nanoid } = require("nanoid");
 const InvariantError = require("../../exceptions/InvariantError");
@@ -9,7 +12,9 @@ class SongsService {
     this._pool = new Pool();
   }
 
-  async addSong({ title, year, genre, performer, duration, albumId }) {
+  async addSong({
+    title, year, genre, performer, duration, albumId,
+  }) {
     const song_id = nanoid(16);
 
     const query = {
@@ -42,12 +47,15 @@ class SongsService {
     if (!result.rows.length) {
       throw new NotFoundError("Lagu tidak ditemukan");
     }
-    return result.rows.map(mapDBToModelSongBy)[0];
+    // return result.rows.map(mapDBToModelSongBy)[0];
+    return mapDBToModelSongBy(result.rows[0]);
   }
 
   async editSongById(
     song_id,
-    { title, year, genre, performer, duration, albumId }
+    {
+      title, year, genre, performer, duration, albumId,
+    },
   ) {
     const query = {
       text: "UPDATE songs SET title = $1, year = $2, genre = $3, performer = $4, duration = $5, id_album = $6 WHERE song_id = $7 RETURNING song_id",

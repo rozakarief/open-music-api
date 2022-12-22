@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 const Joi = require("joi");
 
 const AlbumPayloadSchema = Joi.object({

@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 // mengimpor dotenv dan menjalankan konfigurasinya
 require("dotenv").config();
 
